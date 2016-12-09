@@ -1,0 +1,22 @@
+{
+  "name": "xng-angular-cli",
+  "version": "1.0.0",
+  "description": "CLI to orchestrate CrossEngager's workflow",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "./scripts/copy-blueprints.js && tsc -p src",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/inquirer": "^0.0.32",
+    "inquirer": "^2.0.0",
+    "ncp": "^2.0.0",
+    "typescript": "^2.1.4",
+    "underscore": "^1.8.3"
+  },
+  "devDependencies": {
+    "@types/node": "^0.0.2"
+  }
+}
