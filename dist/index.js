@@ -1,6 +1,16 @@
 var inquirer = require('inquirer');
 var _ = require('underscore');
 var fs = require('fs');
+var PREFIX_REGEXP = /^((?:x|data)[:\-_])/i;
+var SPECIAL_CHARS_REGEXP = /[:\-_]+(.)/g;
+function directiveNormalize(name) {
+    return name
+        .replace(PREFIX_REGEXP, '')
+        .replace(SPECIAL_CHARS_REGEXP, fnCamelCaseReplace);
+}
+function fnCamelCaseReplace(all, letter) {
+    return letter.toUpperCase();
+}
 inquirer.prompt([
     {
         name: 'name',
@@ -11,22 +21,26 @@ inquirer.prompt([
         modulePrefix: 'xng',
         componentPrefix: 'xe',
         component: answers.name,
-        componentName: answers.name + "Component",
-        controllerName: answers.name.split('')[0].toUpperCase() + answers.name.substring(1) + "Controller",
+        componentName: directiveNormalize(answers.name) + "Component",
+        controllerName: directiveNormalize(answers.name).split('')[0].toUpperCase() + directiveNormalize(answers.name).substring(1) + "Controller",
         controllerPath: answers.name + ".controller",
         templatePath: answers.name + ".html"
     };
-    var componentTemplate = fs.
-        readFileSync(__dirname + "/blueprints/__component__.component.ts", 'utf8');
-    var controllerTemplate = fs.
-        readFileSync(__dirname + "/blueprints/__component__.controller.ts", 'utf8');
-    var templateTemplate = fs.
-        readFileSync(__dirname + "/blueprints/__component__.html", 'utf8');
+    var componentTemplate = _getTemplate('component.ts');
+    var controllerTemplate = _getTemplate('controller.ts');
+    var htmlTemplate = _getTemplate('template.html');
     componentTemplate = _.template(componentTemplate)(variables);
     controllerTemplate = _.template(controllerTemplate)(variables);
-    templateTemplate = _.template(templateTemplate)(variables);
-    fs.writeFileSync(process.cwd() + "/" + variables.component + ".component.ts", componentTemplate);
-    fs.writeFileSync(process.cwd() + "/" + variables.component + ".controller.ts", controllerTemplate);
-    fs.writeFileSync(process.cwd() + "/" + variables.component + ".html", templateTemplate);
+    htmlTemplate = _.template(htmlTemplate)(variables);
+    _writeFile(variables.component + ".component.ts", componentTemplate);
+    _writeFile(variables.component + ".controller.ts", controllerTemplate);
+    _writeFile(variables.component + ".html", htmlTemplate);
 });
+function _getTemplate(name) {
+    return fs.
+        readFileSync(__dirname + "/blueprints/" + name, 'utf8');
+}
+function _writeFile(name, template) {
+    fs.writeFileSync(process.cwd() + "/" + name, template);
+}
 //# sourceMappingURL=index.js.map
