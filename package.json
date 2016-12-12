@@ -1,6 +1,6 @@
 {
   "name": "xng-angular-cli",
-  "version": "1.0.0-alpha4",
+  "version": "1.0.0-alpha5",
   "description": "CLI to orchestrate CrossEngager's workflow",
   "main": "dist/index.js",
   "scripts": {
