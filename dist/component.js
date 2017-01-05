@@ -27,12 +27,13 @@ var ComponentService = (function () {
             html: _.template(file_1.FileService.getTemplate('template.html'))(variables)
         };
     };
-    ComponentService.writeFiles = function (variables, templates) {
-        file_1.FileService.writeFile("index.ts", templates.index);
-        file_1.FileService.writeFile(variables.component + ".component.ts", templates.component);
-        file_1.FileService.writeFile(variables.component + ".component.spec.ts", templates.componentSpec);
-        file_1.FileService.writeFile(variables.component + ".controller.ts", templates.controller);
-        file_1.FileService.writeFile(variables.component + ".html", templates.html);
+    ComponentService.writeFiles = function (name, variables, templates) {
+        file_1.FileService.createFolder(name);
+        file_1.FileService.writeFile(name + "/index.ts", templates.index);
+        file_1.FileService.writeFile(name + "/" + variables.component + ".component.ts", templates.component);
+        file_1.FileService.writeFile(name + "/" + variables.component + ".component.spec.ts", templates.componentSpec);
+        file_1.FileService.writeFile(name + "/" + variables.component + ".controller.ts", templates.controller);
+        file_1.FileService.writeFile(name + "/" + variables.component + ".html", templates.html);
     };
     return ComponentService;
 }());

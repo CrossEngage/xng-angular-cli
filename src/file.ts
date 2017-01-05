@@ -14,11 +14,19 @@ export class FileService {
     fs.writeFileSync(`${process.cwd()}/${name}`, template);
   }
 
+  static createFolder(dir: string) {
+    console.log(dir);
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir);
+    }
+  }
+
   static directiveNormalize(name: string) {
     return name
       .replace(PREFIX_REGEXP, '')
       .replace(SPECIAL_CHARS_REGEXP, fnCamelCaseReplace);
   }
+  
 }
 
 function fnCamelCaseReplace(all: string, letter: string) {

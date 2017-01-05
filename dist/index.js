@@ -9,6 +9,6 @@ inquirer.prompt([
 ]).then(function (answers) {
     var variables = component_1.ComponentService.getVariables(answers.name);
     var templates = component_1.ComponentService.getTemplates(variables);
-    component_1.ComponentService.writeFiles(variables, templates);
+    component_1.ComponentService.writeFiles(answers.name, variables, templates);
 });
 //# sourceMappingURL=index.js.map

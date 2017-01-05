@@ -12,6 +12,12 @@ var FileService = (function () {
     FileService.writeFile = function (name, template) {
         fs.writeFileSync(process.cwd() + "/" + name, template);
     };
+    FileService.createFolder = function (dir) {
+        console.log(dir);
+        if (!fs.existsSync(dir)) {
+            fs.mkdirSync(dir);
+        }
+    };
     FileService.directiveNormalize = function (name) {
         return name
             .replace(PREFIX_REGEXP, '')

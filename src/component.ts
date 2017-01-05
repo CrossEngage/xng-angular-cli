@@ -1,4 +1,4 @@
-var _ = require('underscore');
+const _ = require('underscore');
 
 import { FileService } from './file';
 
@@ -29,12 +29,13 @@ export class ComponentService {
     }
   }
 
-  static writeFiles(variables: any, templates: any) {
-    FileService.writeFile(`index.ts`, templates.index);
-    FileService.writeFile(`${variables.component}.component.ts`, templates.component);
-    FileService.writeFile(`${variables.component}.component.spec.ts`, templates.componentSpec);
-    FileService.writeFile(`${variables.component}.controller.ts`, templates.controller);
-    FileService.writeFile(`${variables.component}.html`, templates.html);
+  static writeFiles(name: string, variables: any, templates: any) {
+    FileService.createFolder(name);
+    FileService.writeFile(`${name}/index.ts`, templates.index);
+    FileService.writeFile(`${name}/${variables.component}.component.ts`, templates.component);
+    FileService.writeFile(`${name}/${variables.component}.component.spec.ts`, templates.componentSpec);
+    FileService.writeFile(`${name}/${variables.component}.controller.ts`, templates.controller);
+    FileService.writeFile(`${name}/${variables.component}.html`, templates.html);
   }
 
 }

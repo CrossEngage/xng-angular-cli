@@ -18,5 +18,5 @@ export declare class ComponentService {
         controller: any;
         html: any;
     };
-    static writeFiles(variables: any, templates: any): void;
+    static writeFiles(name: string, variables: any, templates: any): void;
 }

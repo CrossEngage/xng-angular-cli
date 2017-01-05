@@ -11,5 +11,5 @@ inquirer.prompt([
   let variables = ComponentService.getVariables(answers.name);
   let templates = ComponentService.getTemplates(variables);
 
-  ComponentService.writeFiles(variables, templates);
+  ComponentService.writeFiles(answers.name, variables, templates);
 });
