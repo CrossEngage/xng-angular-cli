@@ -1,0 +1,41 @@
+<form #setupForm="ngForm">
+  <div class="space-after">
+    <div layout>
+      <xe-provider-flag
+        [type]="integration.subChannelType.toLowerCase()"
+        [iconUrl]="'images/integrations/'
+        + integration.subChannelType.toLowerCase() + '-icon.svg'"
+      ></xe-provider-flag>
+
+      <div class="form-group" flex="grow">
+        <label for="account-name">Account name</label>
+        <input
+          type="text"
+          required
+          [disabled]="integration.usedIn"
+          placeholder="Account Name"
+          name="accountName"
+          id="account-name"
+          maxlength="120"
+          [(ngModel)]="integration.accountName"
+          #accountName="ngModel"
+          [alreadyExistName]="alreadyExistedNames"
+          xeNotMatch="[/\\]"
+        >
+        <xe-error-messages
+          [for]="accountName"
+          [when]="accountName.dirty || accountName.touched || setupForm.submitted"
+          [messages]="accountNameErrorMessages"
+        ></xe-error-messages>
+      </div>
+    </div>
+
+    <span class="section-header">Setup Section Header</span>
+
+    <div class="form-group">
+      
+      <!-- section content goes here -->
+
+    </div>
+  </div>
+</form>

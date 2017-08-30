@@ -1,15 +1,18 @@
-import inquirer = require('inquirer');
+let argv = process.argv.slice(2);
+import { parseCommand } from './utils/parse-command';
 
-import { ComponentService } from './component';
+/* available commands */
+import { generate } from './commands/generate.command';
 
-inquirer.prompt([
+const commandConfigs: any = [
   {
-    name: 'name',
-    message: 'What is gonna be the name of the component?'
+    name: 'generate',
+    description: 'Generates files based on a template.',
+    aliases: ['g'],
+    run: () => {
+      generate(argv.slice(1));
+    }
   }
-]).then((answers: any) => {
-  let variables = ComponentService.getVariables(answers.name);
-  let templates = ComponentService.getTemplates(variables);
+];
 
-  ComponentService.writeFiles(answers.name, variables, templates);
-});
+parseCommand(argv, commandConfigs);

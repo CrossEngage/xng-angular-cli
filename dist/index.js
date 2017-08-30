@@ -1,14 +1,18 @@
 "use strict";
-var inquirer = require("inquirer");
-var component_1 = require("./component");
-inquirer.prompt([
+Object.defineProperty(exports, "__esModule", { value: true });
+var argv = process.argv.slice(2);
+var parse_command_1 = require("./utils/parse-command");
+/* available commands */
+var generate_command_1 = require("./commands/generate.command");
+var commandConfigs = [
     {
-        name: 'name',
-        message: 'What is gonna be the name of the component?'
+        name: 'generate',
+        description: 'Generates files based on a template.',
+        aliases: ['g'],
+        run: function () {
+            generate_command_1.generate(argv.slice(1));
+        }
     }
-]).then(function (answers) {
-    var variables = component_1.ComponentService.getVariables(answers.name);
-    var templates = component_1.ComponentService.getTemplates(variables);
-    component_1.ComponentService.writeFiles(answers.name, variables, templates);
-});
+];
+parse_command_1.parseCommand(argv, commandConfigs);
 //# sourceMappingURL=index.js.map
