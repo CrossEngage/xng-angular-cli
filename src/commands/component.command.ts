@@ -2,18 +2,19 @@ import inquirer = require('inquirer');
 
 import { ComponentService } from './../component';
 
-export function component(args: string[]) {
+export function component(argv: string[]) {
 
-  inquirer.prompt([
-    {
-      name: 'name',
-      message: 'What is gonna be the name of the component?'
-    }
-  ]).then((answers: any) => {
-    let variables = ComponentService.getVariables(answers.name);
-    let templates = ComponentService.getTemplates(variables);
+  if (argv.length === 0) {
+    console.log('component generator requires a name.');
+    return;
+  }
 
-    ComponentService.writeFiles(answers.name, variables, templates);
-  });
+  let variables = ComponentService.getVariables({name: argv[0]});
+  let templates = ComponentService.getTemplates(variables);
+  ComponentService.writeFiles(variables, templates);
+  console.log('Component generated.');
+  console.log('----------------------');
+  console.log('Still TODO:');
+  console.log(' * Add component to implementing module.');
 
 }

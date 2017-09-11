@@ -1,5 +1,4 @@
-import { parseCommand } from './../utils/parse-command';
-
+import { Parser } from './../parser';
 import { integration } from './integration.command';
 import { component } from './component.command';
 
@@ -22,6 +21,5 @@ export function generate(argv: string[]) {
     }
   ];
   
-  parseCommand(argv, generatorConfigs);
-
+  new Parser(generatorConfigs).parse(argv);
 }

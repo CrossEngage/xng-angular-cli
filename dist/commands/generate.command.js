@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var parse_command_1 = require("./../utils/parse-command");
+var parser_1 = require("./../parser");
 var integration_command_1 = require("./integration.command");
 var component_command_1 = require("./component.command");
 function generate(argv) {
@@ -21,7 +21,7 @@ function generate(argv) {
             }
         }
     ];
-    parse_command_1.parseCommand(argv, generatorConfigs);
+    new parser_1.Parser(generatorConfigs).parse(argv);
 }
 exports.generate = generate;
 //# sourceMappingURL=generate.command.js.map

@@ -1,4 +1,5 @@
 import { Component, Input, OnChanges, OnInit, ViewChild, SimpleChanges } from '@angular/core';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'xe-<%= provider %>-<%= channelType %>',
@@ -9,14 +10,8 @@ export class <%= upperCamelCaseFn(provider) %><%= upperCamelCaseFn(channelType) 
 
   @Input() integration;
   @Input() backendError;
-  @Input() alreadyExistedNames;
+  @Input() alreadyExistedNames: string[];
   @Input() form;
-
-  readonly accountNameErrorMessages = [
-    {'required': 'Account name is required'},
-    {'alreadyExistedName': 'Account with the same name already exists'},
-    {'notMatch': `Please do not use " / " or " \ " characters.`}
-  ];
 
   @ViewChild('setupForm') public setupForm: NgForm;
 

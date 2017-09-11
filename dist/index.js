@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var argv = process.argv.slice(2);
-var parse_command_1 = require("./utils/parse-command");
+var parser_1 = require("./parser");
 /* available commands */
 var generate_command_1 = require("./commands/generate.command");
-var commandConfigs = [
+var parserConfig = [
     {
         name: 'generate',
-        description: 'Generates files based on a template.',
+        description: 'Generates files based on templates.',
         aliases: ['g'],
         run: function () {
             generate_command_1.generate(argv.slice(1));
         }
     }
 ];
-parse_command_1.parseCommand(argv, commandConfigs);
+new parser_1.Parser(parserConfig).parse(argv);
 //# sourceMappingURL=index.js.map

@@ -3,7 +3,7 @@ import { Observable } from 'rxjs/Rx';
 
 import { TestBed, async } from '@angular/core/testing';
 
-import { O<%= upperCamelCaseFn(provider) %><%= upperCamelCaseFn(channelType) %>Service } from './<%= provider %>--<%= channelType %>.service';
+import { <%= upperCamelCaseFn(provider) %><%= upperCamelCaseFn(channelType) %>Service } from './<%= provider %>--<%= channelType %>.service';
 
 
  describe('<%= upperCamelCaseFn(provider) %><%= upperCamelCaseFn(channelType) %>Service', () => {
@@ -43,7 +43,7 @@ import { O<%= upperCamelCaseFn(provider) %><%= upperCamelCaseFn(channelType) %>S
       let params = {
         test: '12345t'
       };
-      service.testOptimizelyConnection(params.test).subscribe(res => {
+      service.getDataFromBackend(params.test).subscribe(res => {
         result = res;
       });
       expect(result).toBe('placeholder response');

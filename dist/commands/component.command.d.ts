@@ -1,1 +1,1 @@
-export declare function component(args: string[]): void;
+export declare function component(argv: string[]): void;

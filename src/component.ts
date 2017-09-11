@@ -1,41 +1,33 @@
 const _ = require('underscore');
+const changeCase = require('change-case'); 
 
 import { FileService } from './file';
 
 export class ComponentService {
   
-  static getVariables(name: string) {
+  static getVariables(args: any) {
     return {
-      modulePrefix: 'xng', // this should come from a config file later
-      moduleName: `${FileService.directiveNormalize(name)}`,
-      componentPrefix: 'xe',
-      component: name,
-      componentName: `${FileService.directiveNormalize(name)}Component`,
-      capitalizedComponentName: `${FileService.directiveNormalize(name).split('')[0].toUpperCase() + FileService.directiveNormalize(name).substring(1)}`,
-      controllerName: `${FileService.directiveNormalize(name).split('')[0].toUpperCase() + FileService.directiveNormalize(name).substring(1)}Controller`,
-      componentPath: `${name}.component`,
-      controllerPath: `${name}.controller`,
-      templatePath: `${name}.html`
+      name: args.name,
+      capitalizeFn: (arg: string) =>  changeCase.upperCaseFirst(arg),
+      camelCaseFn: (arg: string) => arg.replace(/-([a-z])/g, function (g) { return g[1].toUpperCase(); }),
+      upperCamelCaseFn: (arg: string) => changeCase.upperCaseFirst(arg.replace(/-([a-z])/g, function (g) { return g[1].toUpperCase(); }))
     }
   }
 
   static getTemplates(variables: any) {
     return {
-      index: _.template(FileService.getTemplate('index.ts'))(variables),
-      component: _.template(FileService.getTemplate('component.ts'))(variables),
-      componentSpec: _.template(FileService.getTemplate('component.spec.ts'))(variables),
-      controller: _.template(FileService.getTemplate('controller.ts'))(variables),
-      html: _.template(FileService.getTemplate('template.html'))(variables) 
+      component: _.template(FileService.getTemplate('component/component.ts'))(variables),
+      spec: _.template(FileService.getTemplate('component/component.spec.ts'))(variables),
+      template: _.template(FileService.getTemplate('component/component.html'))(variables),
     }
   }
 
-  static writeFiles(name: string, variables: any, templates: any) {
-    FileService.createFolder(name);
-    FileService.writeFile(`${name}/index.ts`, templates.index);
-    FileService.writeFile(`${name}/${variables.component}.component.ts`, templates.component);
-    FileService.writeFile(`${name}/${variables.component}.component.spec.ts`, templates.componentSpec);
-    FileService.writeFile(`${name}/${variables.component}.controller.ts`, templates.controller);
-    FileService.writeFile(`${name}/${variables.component}.html`, templates.html);
-  }
+  static writeFiles(variables: any, templates: any) {
+    const name = variables.name;
 
+    FileService.createFolder(`${name}`);
+    FileService.writeFile(`${name}/${name}.component.ts`, templates.component);
+    FileService.writeFile(`${name}/${name}.component.spec.ts`, templates.spec);
+    FileService.writeFile(`${name}/${name}.html`, templates.template);
+  }
 }

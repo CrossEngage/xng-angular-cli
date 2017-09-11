@@ -57,7 +57,7 @@ var IntegrationService = (function () {
         }
         if (variables.generateService) {
             file_1.FileService.writeFile(folderName + "/" + fileName + ".service.ts", templates.service);
-            file_1.FileService.writeFile(folderName + "/" + fileName + ".service.spec.html", templates.serviceSpec);
+            file_1.FileService.writeFile(folderName + "/" + fileName + ".service.spec.ts", templates.serviceSpec);
         }
         if (variables.generateOther) {
             file_1.FileService.writeFile(folderName + "/" + fileName + ".models.ts", templates.models);

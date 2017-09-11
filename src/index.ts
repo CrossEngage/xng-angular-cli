@@ -1,18 +1,18 @@
 let argv = process.argv.slice(2);
-import { parseCommand } from './utils/parse-command';
+import { Parser } from './parser';
 
 /* available commands */
 import { generate } from './commands/generate.command';
 
-const commandConfigs: any = [
+const parserConfig = [
   {
     name: 'generate',
-    description: 'Generates files based on a template.',
+    description: 'Generates files based on templates.',
     aliases: ['g'],
     run: () => {
       generate(argv.slice(1));
     }
   }
-];
+]
 
-parseCommand(argv, commandConfigs);
+new Parser(parserConfig).parse(argv);
