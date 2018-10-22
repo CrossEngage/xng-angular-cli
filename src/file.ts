@@ -17,7 +17,7 @@ export class FileService {
   static createFolder(dir: string) {
     console.log(dir);
     if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir);
+      fs.mkdirSync(`${process.cwd()}/${dir}`);
     }
   }
 
