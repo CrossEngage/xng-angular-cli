@@ -1,11 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 
-import { ValidationErrorService } from 'app/modules/common/services/validation-error.service';
-import { <%= upperCamelCaseFn(provider) %><%= upperCamelCaseFn(channelType) %>Content } from './<%= provider %>--<%= channelType %>.models';
+import { ValidationErrorService } from 'src/app/core/validation-error-service/validation-error.service';
+import { <%= upperCamelCaseFn(provider) %><%= upperCamelCaseFn(channelType) %>Content } from '../<%= provider %>--<%= channelType %>.models';
 
 import { <%= upperCamelCaseFn(provider) %><%= upperCamelCaseFn(channelType) %>MessageEditComponent } from './<%= provider %>--<%= channelType %>-message-edit.component';
-import { IntegrationRef } from 'app/modules/campaign/models/integration-ref.model';
 
 describe('<%= upperCamelCaseFn(provider) %><%= upperCamelCaseFn(channelType) %>MessageEditComponent', () => {
   let component: <%= upperCamelCaseFn(provider) %><%= upperCamelCaseFn(channelType) %>MessageEditComponent;

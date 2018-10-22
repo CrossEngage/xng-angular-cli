@@ -4,6 +4,7 @@
   "description": "CLI to orchestrate CrossEngager's workflow",
   "main": "dist/index.js",
   "scripts": {
+    "prepublish": "npm run build",
     "clean": "./scripts/clean.js",
     "copy:blueprints": "./scripts/copy-blueprints.js",
     "build": "npm run clean && tsc -p src && npm run copy:blueprints",

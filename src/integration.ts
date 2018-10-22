@@ -2,6 +2,7 @@ const _ = require('underscore');
 const changeCase = require('change-case'); 
 
 import { FileService } from './file';
+import { ComponentService } from './component';
 
 export class IntegrationService {
   
@@ -22,6 +23,7 @@ export class IntegrationService {
 
   static getTemplates(variables: any) {
     return {
+      fields: _.template(FileService.getTemplate('integrations/fields.ts'))(variables),
       setupComponent: _.template(FileService.getTemplate('integrations/setup.component.ts'))(variables),
       setupSpec: _.template(FileService.getTemplate('integrations/setup.component.spec.ts'))(variables),
       setupTemplate: _.template(FileService.getTemplate('integrations/setup.html'))(variables),
@@ -38,39 +40,44 @@ export class IntegrationService {
     }
   }
 
-  static writeFiles(variables: any, templates: any) {
+  static writeFiles(variables: any, templates: any, baseUrl: string = '') {
     const fileName = `${variables.provider}--${variables.channelType}`;
-    const folderName = `+${fileName}`;
+    const directory = `${baseUrl}/+${fileName}`;
 
-    FileService.createFolder(folderName);
-    
+    FileService.createFolder(directory);
+
+    FileService.writeFile(`${directory}/${fileName}-fields.ts`, templates.fields);
+
     if (variables.generateSetup) {
-      FileService.writeFile(`${folderName}/${fileName}-setup.component.ts`, templates.setupComponent);
-      FileService.writeFile(`${folderName}/${fileName}-setup.component.spec.ts`, templates.setupSpec);
-      FileService.writeFile(`${folderName}/${fileName}-setup.html`, templates.setupTemplate);
+      FileService.createFolder(`${directory}/${fileName}-setup/`);
+      FileService.writeFile(`${directory}/${fileName}-setup/${fileName}-setup.component.ts`, templates.setupComponent);
+      FileService.writeFile(`${directory}/${fileName}-setup/${fileName}-setup.component.spec.ts`, templates.setupSpec);
+      FileService.writeFile(`${directory}/${fileName}-setup/${fileName}-setup.html`, templates.setupTemplate);
     }
     
     if (variables.generateMessageEdit) {
-      FileService.writeFile(`${folderName}/${fileName}-message-edit.component.ts`, templates.messageEditComponent);
-      FileService.writeFile(`${folderName}/${fileName}-message-edit.component.spec.ts`, templates.messageEditSpec);
-      FileService.writeFile(`${folderName}/${fileName}-message-edit.html`, templates.messageEditTemplate);
+      FileService.createFolder(`${directory}/${fileName}-message-edit/`);
+      FileService.writeFile(`${directory}/${fileName}-message-edit/${fileName}-message-edit.component.ts`, templates.messageEditComponent);
+      FileService.writeFile(`${directory}/${fileName}-message-edit/${fileName}-message-edit.component.spec.ts`, templates.messageEditSpec);
+      FileService.writeFile(`${directory}/${fileName}-message-edit/${fileName}-message-edit.html`, templates.messageEditTemplate);
     }
 
     if (variables.generateMessageView) {
-      FileService.writeFile(`${folderName}/${fileName}-message-view.component.ts`, templates.messageViewComponent);
-      FileService.writeFile(`${folderName}/${fileName}-message-view.html`, templates.messageViewTemplate);
+      FileService.createFolder(`${directory}/${fileName}-message-view/`);
+      FileService.writeFile(`${directory}/${fileName}-message-view/${fileName}-message-view.component.ts`, templates.messageViewComponent);
+      FileService.writeFile(`${directory}/${fileName}-message-view/${fileName}-message-view.html`, templates.messageViewTemplate);
     }
 
     if (variables.generateService) {
-      FileService.writeFile(`${folderName}/${fileName}.service.ts`, templates.service);
-      FileService.writeFile(`${folderName}/${fileName}.service.spec.ts`, templates.serviceSpec);
+      FileService.writeFile(`${directory}/${fileName}.service.ts`, templates.service);
+      FileService.writeFile(`${directory}/${fileName}.service.spec.ts`, templates.serviceSpec);
     }
 
     if (variables.generateOther) {
-      FileService.writeFile(`${folderName}/${fileName}.models.ts`, templates.models);
-      FileService.writeFile(`${folderName}/${fileName}.module.ts`, templates.module);
+      FileService.writeFile(`${directory}/${fileName}.models.ts`, templates.models);
+      FileService.writeFile(`${directory}/${fileName}.module.ts`, templates.module);
       if (variables.generateSetup || variables.generateMessageView) {
-        FileService.writeFile(`${folderName}/index.ts`, templates.index);
+        FileService.writeFile(`/${directory}/index.ts`, templates.index);
       }
     }
   }

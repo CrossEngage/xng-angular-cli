@@ -1,8 +1,6 @@
-import { ReactiveFormsModule, FormsModule, FormControl, NgForm } from '@angular/forms';
-import { Response, ResponseOptions } from '@angular/http';
+import { FormsModule, NgForm } from '@angular/forms';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PromiseButtonModule } from 'app/modules/components/promise-button';
 import { <%= upperCamelCaseFn(provider) %><%= upperCamelCaseFn(channelType) %>SetupComponent } from './<%= provider %>--<%= channelType %>-setup.component';
 
 describe('<%= upperCamelCaseFn(provider) %><%= upperCamelCaseFn(channelType) %>SetupComponent', () => {
@@ -14,8 +12,7 @@ describe('<%= upperCamelCaseFn(provider) %><%= upperCamelCaseFn(channelType) %>S
 
     TestBed.configureTestingModule({
       imports: [
-        FormsModule,
-        PromiseButtonModule
+        FormsModule
       ],
       declarations: [
         <%= upperCamelCaseFn(provider) %><%= upperCamelCaseFn(channelType) %>SetupComponent
@@ -50,6 +47,10 @@ describe('<%= upperCamelCaseFn(provider) %><%= upperCamelCaseFn(channelType) %>S
     it('should set form to dirty', () => {
       component.ngOnInit();
       expect(component.form.isDirty).toEqual(true);
+    });
+
+    it('should set form to dirty', () => {
+      expect(false).toEqual(true, 'Test for <%= upperCamelCaseFn(provider) %><%= upperCamelCaseFn(channelType) %>SetupComponent not implemented');
     });
 
   });

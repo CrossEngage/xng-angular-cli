@@ -1,45 +1,31 @@
-import { Component, Input, OnChanges, OnInit, ViewChild, SimpleChanges } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+
+import { IntegrationSetup } from 'src/modules/integrations/integration-setup';
+import { ValidationErrorService } from 'src/app/core/validation-error-service/validation-error.service';
+
+import { <%= upperCamelCaseFn(provider) %><%= upperCamelCaseFn(channelType) %>Account } from '../<%= provider %>--<%= channelType %>.models';
+import { <%= upperCamelCaseFn(provider) %><%= upperCamelCaseFn(channelType) %>Service } from '../<%= provider %>--<%= channelType %>.service';
 
 @Component({
   selector: 'xe-<%= provider %>-<%= channelType %>',
   template: require('./<%= provider %>--<%= channelType %>-setup.html')
 })
 
-export class <%= upperCamelCaseFn(provider) %><%= upperCamelCaseFn(channelType) %>SetupComponent implements OnInit, OnChanges {
+export class <%= upperCamelCaseFn(provider) %><%= upperCamelCaseFn(channelType) %>SetupComponent extends IntegrationSetup<<%= upperCamelCaseFn(provider) %><%= upperCamelCaseFn(channelType) %>Account> implements OnInit {
 
-  @Input() integration;
-  @Input() backendError;
-  @Input() alreadyExistedNames: string[];
-  @Input() form;
-
-  @ViewChild('setupForm') public setupForm: NgForm;
+  constructor(
+    private <%= camelCaseFn(provider) %><%= upperCamelCaseFn(channelType) %>Service: <%= upperCamelCaseFn(provider) %><%= upperCamelCaseFn(channelType) %>Service,
+    private validationErrorService: ValidationErrorService
+  ) {
+    super();
+  }
 
   ngOnInit() {
-    this.form.$setValidity('setup', false);
-    this.form.$setDirty();
-    this.setupForm.form.valueChanges.subscribe(
-      data => {
-        this.form.$setValidity('setup', this.setupForm.valid);
-      }
-    );
+    super.ngOnInit();
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    let currentError = changes.backendError.currentValue;
-    if (currentError) {
-      this.handleBackendError(currentError);
-    }
-  }
-
-  private handleBackendError(error: [any]): void {
-    if (error && error.length === 1) {
-      if (error[0].field === 'apiKey') {
-        this.setupForm.form.controls.apiKey.setErrors({
-          'invalid': true
-        });
-      }
-    }
+  onSubmit(): void {
+    this.validationErrorService.touchFormControls(this.setupForm);
   }
 
 }

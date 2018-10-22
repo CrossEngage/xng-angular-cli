@@ -35,7 +35,7 @@ export function integration (argv: string[]) {
     answers.provider = argv[0];
     let variables = IntegrationService.getVariables(answers);
     let templates = IntegrationService.getTemplates(variables);
-    IntegrationService.writeFiles(variables, templates);
+    IntegrationService.writeFiles(variables, templates, '/src/modules/integrations');
     console.log('Integration generated.');
     console.log('----------------------');
     console.log('Still TODO:');
